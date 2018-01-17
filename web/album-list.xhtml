@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Albums</title>
+    </h:head>
+    
+    <h:body>
+        hello from albums
+        <h:form>
+             <p>
+                <label>Name: </label>
+                   <br/>
+                       <h:inputText p:type="text" id="albumName" 
+                               p:placeholder="name" value="#{albumList.album.titre}" 
+                               required="required" title="Enter album name."/>
+             </p>
+             <p>
+                <label>Description </label>
+                   <br/>
+                       <h:inputText p:type="text" id="albumDescription" 
+                               p:placeholder="name" value="#{albumList.album.description}" 
+                               required="required" title="Enter album name."/>
+             </p>
+            <p>
+                        <h:commandButton value="Create Album" 
+                                 action="#{albumList.create()}"/>
+                    </p>
+        </h:form>
+        <h:outputText value="#{authManager.connectedUser.email}"/>
+        
+        <ui:repeat value="#{albumList.albumList}" var="album">
+            <li><h:outputText value="#{album.name}" /></li>
+            <li><h:outputText value="#{album.numberOfPictures()}" /></li>
+        </ui:repeat>
+    </h:body>
+</html>
+
+
