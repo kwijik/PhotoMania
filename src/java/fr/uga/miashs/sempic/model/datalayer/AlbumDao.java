@@ -6,7 +6,9 @@
 package fr.uga.miashs.sempic.model.datalayer;
 
 import fr.uga.miashs.sempic.model.Album;
+import fr.uga.miashs.sempic.model.SempicUser;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -15,9 +17,10 @@ import javax.persistence.PersistenceContext;
  *
  * @author denisbolshakov
  */
+@Stateless
 public class AlbumDao extends AbstractJpaDao<Album,Long> {
 
-    @PersistenceContext(unitName = "Album")
+    @PersistenceContext(unitName = "SempicPU")
     private EntityManager em;
     
     public AlbumDao(){
@@ -35,7 +38,7 @@ public class AlbumDao extends AbstractJpaDao<Album,Long> {
     public Album getByName(String titre, Long owner_id){
         try{
             return (Album)
-                    getEntityManager().createQuery("Select a FROM ALBUM a" + 
+                    getEntityManager().createQuery("Select a FROM Album a " + 
                             "WHERE a.titre=:titre and a.owner_id=:owner_id").setParameter("owner_id", owner_id)
              .setParameter("titre", titre)
                 .getSingleResult();
@@ -44,12 +47,12 @@ public class AlbumDao extends AbstractJpaDao<Album,Long> {
         }
     }
     
-    public List<Album> getById(Long owner_id){
+    public List<Album> getById(SempicUser owner){
         try{
             return 
-                    getEntityManager().createQuery("Select a FROM ALBUM a" + 
-                            "WHERE a.owner_id=:owner_id")
-             .setParameter("owner_id", owner_id)
+                    getEntityManager().createQuery("Select a FROM Album a " + 
+                            "WHERE a.owner=:owner")
+             .setParameter("owner", owner)
                 .getResultList();
         }  catch (NoResultException e) {
             return null;

@@ -10,6 +10,7 @@ import fr.uga.miashs.sempic.model.SempicUser;
 import fr.uga.miashs.sempic.model.datalayer.AlbumDao;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
@@ -36,14 +37,28 @@ public class AlbumList implements Serializable {
     Album album;
     
     public AlbumList(){
-        connectedUser = am.getConnectedUser();
-        dao = new AlbumDao();
-        connectedUser.getId();
-        albumList = dao.getById(connectedUser.getId());
+       // System.out.println("AM: " + am);
+        
+       // connectedUser.getId();
+        // albumList = dao.getById(connectedUser.getId());
     }
     
-    public List getList() {
-        return albumList;
+    @PostConstruct
+    public void init(){
+        //connectedUser = am.getConnectedUser();
+       // dao = new AlbumDao();
+       // albumList = dao.getById(connectedUser.getId());
+    }
+    
+    public SempicUser getConnectedUser() {
+        if(connectedUser == null){
+            connectedUser = am.getConnectedUser();
+        }
+        return connectedUser;
+    }
+    
+    public List<Album> getList() {
+        return dao.getById(getConnectedUser());
     }
     
     public void setAlbum(Album a) {

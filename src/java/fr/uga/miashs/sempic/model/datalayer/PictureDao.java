@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.model.datalayer;
 
 import fr.uga.miashs.sempic.model.Picture;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -15,9 +16,10 @@ import javax.persistence.PersistenceContext;
  *
  * @author denisbolshakov
  */
+@Stateless
 public class PictureDao extends AbstractJpaDao<Picture, Long>{
 
-    @PersistenceContext(unitName = "Picture")
+    @PersistenceContext(unitName = "SempicPU")
     private EntityManager em;
 
     public PictureDao(){

@@ -17,7 +17,7 @@
             </h:inputFile>
         </h:form>
         
-        <ui:repeat value="#{albumList.albumList}" var="album">
+        <ui:repeat value="#{albumList.getList()}" var="album">
             <li><h:outputText value="#{album.name}" /></li>
             <li><h:outputText value="#{album.numberOfPictures()}" /></li>
             
