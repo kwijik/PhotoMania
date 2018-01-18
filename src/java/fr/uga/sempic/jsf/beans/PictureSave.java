@@ -23,10 +23,7 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
-/**
- *
- * @author denisbolshakov
- */
+
 @Named
 @SessionScoped
 public class PictureSave implements Serializable{
@@ -62,11 +59,15 @@ public class PictureSave implements Serializable{
     }
     
     public void save() throws Exception {
-        try (InputStream input = file.getInputStream()) {
+        try  {
+            InputStream input = file.getInputStream();
             String mime = file.getContentType();
+            
             if (mimeTypes.containsKey(mime)){
                 
                 String fileName = createSha1(input) + "." + mimeTypes.get(mime);
+                input = file.getInputStream(); // mark(0) doesnt work, so we initialize again
+            //  String fileName = "test.jpeg";
                 ps.storePicture(UPLOADS.resolve(fileName),input);
             } 
         }

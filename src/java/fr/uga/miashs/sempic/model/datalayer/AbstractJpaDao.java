@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
  * A subclass of this has to be created for each class for which you want the 
  * instances to be persisted with JPA. Within each subclass you can create
  * specific methods for each query you want to execute on the type.
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
  */
 public abstract class AbstractJpaDao<T,K>  {
 

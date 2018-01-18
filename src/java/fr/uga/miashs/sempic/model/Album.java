@@ -93,11 +93,11 @@ public class Album implements Serializable {
         this.pictures.add(p);
     }
     
-    public List<Picture>  getPicture(Picture p){
+    public List<Picture>  getPictures(){
         return this.pictures;
     }
     
-    public int numberOfPictures(Picture p){
+    public int getNumberOfPictures(){
         return this.pictures.size();
     }
     

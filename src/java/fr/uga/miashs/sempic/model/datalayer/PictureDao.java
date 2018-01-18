@@ -5,6 +5,7 @@
  */
 package fr.uga.miashs.sempic.model.datalayer;
 
+import fr.uga.miashs.sempic.model.Album;
 import fr.uga.miashs.sempic.model.Picture;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -35,7 +36,7 @@ public class PictureDao extends AbstractJpaDao<Picture, Long>{
     public Picture getByName(String name, String album_titre){
         try{
             return (Picture)
-                    getEntityManager().createQuery("Select a FROM Picture p" + 
+                    getEntityManager().createQuery("Select a FROM Picture p " + 
                             "WHERE p. ame=:name and a.titre=:album_titre").setParameter("name", name)
              .setParameter("titre", album_titre)
                 .getSingleResult();
@@ -44,12 +45,12 @@ public class PictureDao extends AbstractJpaDao<Picture, Long>{
         }
     }
     
-    public List<Picture> getByAlbum(Long album_id){
+    public List<Picture> getByAlbum(Album album){
         try{
             return 
-                    getEntityManager().createQuery("Select p FROM Picture p" + 
-                            "WHERE p.album_id=:album_id")
-             .setParameter("album_id", album_id)
+                    getEntityManager().createQuery("Select p FROM Picture p " + 
+                            "WHERE p.album=:album")
+             .setParameter("album", album)
                 .getResultList();
         }  catch (NoResultException e) {
             return null;

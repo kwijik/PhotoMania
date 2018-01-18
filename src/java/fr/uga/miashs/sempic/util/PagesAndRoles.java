@@ -9,10 +9,7 @@ import fr.uga.miashs.sempic.model.SempicUser;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
+
 public enum PagesAndRoles {
     
     /*

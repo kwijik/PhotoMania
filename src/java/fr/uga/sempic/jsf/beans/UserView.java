@@ -24,10 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolationException;
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
+
 @Named
 @SessionScoped
 public class UserView implements Serializable {

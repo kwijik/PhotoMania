@@ -12,10 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
+
 @Stateless
 public class SempicUserDao extends AbstractJpaDao<SempicUser,Long> {
 

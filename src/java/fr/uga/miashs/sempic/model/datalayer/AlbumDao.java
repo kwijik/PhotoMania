@@ -13,10 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author denisbolshakov
- */
+
 @Stateless
 public class AlbumDao extends AbstractJpaDao<Album,Long> {
 
@@ -47,13 +44,25 @@ public class AlbumDao extends AbstractJpaDao<Album,Long> {
         }
     }
     
-    public List<Album> getById(SempicUser owner){
+    public List<Album> getByUser(SempicUser owner){
         try{
             return 
                     getEntityManager().createQuery("Select a FROM Album a " + 
                             "WHERE a.owner=:owner")
              .setParameter("owner", owner)
                 .getResultList();
+        }  catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    public Album getById(Long id){
+        try{
+            return (Album)
+                    getEntityManager().createQuery("Select a FROM Album a " + 
+                            "WHERE a.id=:id")
+             .setParameter("id", id)
+                .getSingleResult();
         }  catch (NoResultException e) {
             return null;
         }

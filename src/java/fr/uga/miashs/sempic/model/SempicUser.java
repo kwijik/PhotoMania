@@ -19,10 +19,7 @@ import java.util.logging.Logger;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
+
 @Table
 @Entity
 public class SempicUser implements Serializable {

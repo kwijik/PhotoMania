@@ -8,19 +8,24 @@
         <title>Pictures</title>
     </h:head>
     <h:body>
-        hello from pictures
+        
+        <f:metadata>
+            <f:viewParam name="album" value="#{pictures.album}"/>
+        </f:metadata>
+
+         hello from pictures
         <h:outputText value="#{authManager.connectedUser.email}"/>
         
+
+
         <h:form enctype="multipart/form-data">
             <h:inputFile value="#{pictureSave.file}">
             <f:ajax listener="#{pictureSave.save}" />
             </h:inputFile>
         </h:form>
         
-        <ui:repeat value="#{albumList.getList()}" var="album">
-            <li><h:outputText value="#{album.name}" /></li>
-            <li><h:outputText value="#{album.numberOfPictures()}" /></li>
-            
+        <ui:repeat value="#{pictures.list}" var="picture">
+            <li><h:outputText value="#{picture.name}" /></li>
         </ui:repeat>
     </h:body>
 </html>

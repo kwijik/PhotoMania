@@ -34,8 +34,8 @@
         <h:outputText value="#{authManager.connectedUser.email}"/>
         
         <ui:repeat value="#{albumList.albumList}" var="album">
-            <li><h:outputText value="#{album.name}" /></li>
-            <li><h:outputText value="#{album.numberOfPictures()}" /></li>
+            <li><h:outputText value="#{album.titre}" /></li>
+            <li><h:outputText value="#{album.numberOfPictures}" /></li>
         </ui:repeat>
     </h:body>
 </html>

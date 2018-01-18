@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -23,7 +25,8 @@ public class Picture implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-  //  @
+    @NotNull
+    @ManyToOne
     private Album album;
     private String name;
     

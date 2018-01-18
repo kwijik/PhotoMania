@@ -20,10 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolationException;
 
-/**
- *
- * @author denisbolshakov
- */
+
 @Named
 @SessionScoped
 public class AlbumList implements Serializable {
@@ -57,12 +54,19 @@ public class AlbumList implements Serializable {
         return connectedUser;
     }
     
-    public List<Album> getList() {
-        return dao.getById(getConnectedUser());
+    public List<Album> getAlbumList() {
+        return dao.getByUser(getConnectedUser());
     }
     
     public void setAlbum(Album a) {
         this.album = a;
+    }
+    
+    public Album getAlbum() {
+        if (album == null) {
+            album = new Album(am.getConnectedUser());
+        }
+        return album;
     }
 
     public String create() {

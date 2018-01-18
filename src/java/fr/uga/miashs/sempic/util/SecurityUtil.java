@@ -10,10 +10,7 @@ import java.security.*;
 import java.util.*;
 import java.util.logging.*;
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
+
 public class SecurityUtil {
     
     private static final SecureRandom RANDOM = new SecureRandom();

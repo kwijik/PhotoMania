@@ -20,10 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
+
 @FacesRenderer(componentFamily = "javax.faces.Input", rendererType = "javax.faces.File")
 public class MultipleFileRenderer extends FileRenderer {
 
