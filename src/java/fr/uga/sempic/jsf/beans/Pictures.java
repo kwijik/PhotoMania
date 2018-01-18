@@ -56,8 +56,9 @@ public class Pictures implements Serializable{
         }
         return connectedUser;
     }
+    // why np exeption ? 
     
-    
+    // as idea we can keep long and at the last moment get from it album
     public void setAlbum(Long id) {
         this.album = albumDao.getById(id);
     }
