@@ -16,10 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author denisbolshakov
- */
+
 
 @Entity
 public class Album implements Serializable {

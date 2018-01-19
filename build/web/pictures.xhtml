@@ -7,25 +7,26 @@
     <h:head>
         <title>Pictures</title>
     </h:head>
+    <f:metadata>
+            <f:viewParam name="album" value="#{pictures.albumId}" required="true" />
+            <f:viewParam name="album" value="#{pictureSave.albumId}" required="true" />
+    </f:metadata>
+    
     <h:body>
-        
-        <f:metadata>
-            <f:viewParam name="album" value="#{pictures.album}"/>
-        </f:metadata>
 
-         hello from pictures
+         hello from pictures #{pictureSave.albumId}
         <h:outputText value="#{authManager.connectedUser.email}"/>
         
-
-
         <h:form enctype="multipart/form-data">
             <h:inputFile value="#{pictureSave.file}">
             <f:ajax listener="#{pictureSave.save}" />
             </h:inputFile>
         </h:form>
         
+        #{pictures.list}
         <ui:repeat value="#{pictures.list}" var="picture">
-            <li><h:outputText value="#{picture.name}" /></li>
+            
+            <h:graphicImage value="#{picture.thumbnailPath}" />
         </ui:repeat>
     </h:body>
 </html>

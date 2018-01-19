@@ -26,28 +26,31 @@ public class Pictures implements Serializable{
     AuthManager am;
     @EJB
     PictureDao pictureDao;
+    @EJB
     AlbumDao albumDao;
-    Album album;
+   // Album album;
+    Long albumId;
     SempicUser connectedUser;
     
     
     public Pictures(){
         // this.albumList ;
-        AuthManager am = new AuthManager();
+      //  AuthManager am = new AuthManager();
     //    SempicUser connectedUser = am.getConnectedUser();
       //  AlbumDao ad = new AlbumDao();
        // albumList = ad.getById(connectedUser.getId());
     }
     
-    public List getList() {
-        return pictureDao.getByAlbum(album);
+    public List<Picture> getList() {
+        Album a = albumDao.getById(getAlbumId());
+        return pictureDao.getByAlbum(a);
     }
     
-    public Long getAlbum(){
-        if (album == null){
+    public Long getAlbumId(){
+        if (albumId == null){
             return Long.valueOf(0);
         }
-        return album.getId();
+        return albumId;
     }
     
     public SempicUser getConnectedUser() {
@@ -59,8 +62,8 @@ public class Pictures implements Serializable{
     // why np exeption ? 
     
     // as idea we can keep long and at the last moment get from it album
-    public void setAlbum(Long id) {
-        this.album = albumDao.getById(id);
+    public void setAlbumId(Long id) {
+        this.albumId = id;
     }
     
 }

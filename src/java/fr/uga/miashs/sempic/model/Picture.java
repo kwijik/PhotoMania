@@ -5,7 +5,14 @@
  */
 package fr.uga.miashs.sempic.model;
 
+import fr.uga.miashs.sempic.model.datalayer.PictureStore;
+import static fr.uga.miashs.sempic.model.datalayer.PictureStore.THUMBNAILS;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author denisbolshakov
- */
+
 @Entity
 public class Picture implements Serializable {
 
@@ -31,6 +35,33 @@ public class Picture implements Serializable {
     private String name;
     
     
+   public String getPicturePath() {
+        return PictureStore.UPLOADSWEB.resolve(name).toString();
+    }
+   
+    public String getThumbnailPath() {
+        Path pic = Paths.get(name);
+        
+        try {
+            PictureStore ps = new PictureStore();
+            ps.getPictureStream(pic, 120);
+            return PictureStore.getAbsolutePath(PictureStore.THUMBNAILSWEB.resolve(String.valueOf(120)), pic).toString();
+        } catch (IOException ex) {
+            Logger.getLogger(Picture.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+   
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+    
+    
+    public Album getAlbum() {
+        return album;
+    }
+
+    
     public String getName() {
         return name;
     }
@@ -38,6 +69,8 @@ public class Picture implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    
     
     public Long getId() {
         return id;

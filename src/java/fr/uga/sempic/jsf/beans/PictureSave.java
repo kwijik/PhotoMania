@@ -5,6 +5,10 @@
  */
 package fr.uga.sempic.jsf.beans;
 
+import fr.uga.miashs.sempic.model.Album;
+import fr.uga.miashs.sempic.model.Picture;
+import fr.uga.miashs.sempic.model.datalayer.AlbumDao;
+import fr.uga.miashs.sempic.model.datalayer.PictureDao;
 import fr.uga.miashs.sempic.model.datalayer.PictureStore;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.servlet.http.Part;
@@ -29,10 +34,16 @@ import javax.xml.bind.DatatypeConverter;
 public class PictureSave implements Serializable{
 
     private Part file;
-    private static final Path UPLOADS = Paths.get("/Users/denisbolshakov/Documents/JavaEE/files");
-    private static final Path THUMBNAILS = Paths.get("/Users/denisbolshakov/Documents/JavaEE/thumbnails");
-    
+      
     private PictureStore ps;
+    
+    @EJB
+    private PictureDao dao;
+    
+    private Long albumId;
+    
+    @EJB
+    AlbumDao albumDao;
     
     private static final Map <String, String> mimeTypes; // static - one obj for all
     
@@ -43,9 +54,20 @@ public class PictureSave implements Serializable{
         mimeTypes = Collections.unmodifiableMap(aMap);
     }
     
+    public Long getAlbumId(){
+        if (albumId == null){
+            return Long.valueOf(0);
+        }
+        return albumId;
+    }
+    
+    public void setAlbumId(Long id) {
+        this.albumId = id;
+    }
+    
     public PictureSave(){
         try {
-            ps = new PictureStore(UPLOADS,THUMBNAILS);
+            ps = new PictureStore();
         } catch (IOException ex) {
             Logger.getLogger(PictureSave.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,13 +90,19 @@ public class PictureSave implements Serializable{
                 String fileName = createSha1(input) + "." + mimeTypes.get(mime);
                 input = file.getInputStream(); // mark(0) doesnt work, so we initialize again
             //  String fileName = "test.jpeg";
-                ps.storePicture(UPLOADS.resolve(fileName),input);
+                ps.storePicture(PictureStore.UPLOADS.resolve(fileName),input);
+                Picture p = new Picture();
+                p.setName(fileName);
+                p.setAlbum(albumDao.getById(albumId));
+                dao.create(p);
             } 
+            
         }
         catch (IOException e) {
         // Show faces message?
         }
     }
+    
     
     private String createSha1(InputStream fis) throws IOException  {
         MessageDigest digest;

@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
@@ -19,22 +20,28 @@ import javax.imageio.ImageIO;
 
 public class PictureStore {
 
-    private Path pictureStore;
-    private Path thumbnailsStore;
-
-    public PictureStore(Path pictureStore, Path thumbnailsStore) throws IOException {
-        this.pictureStore = pictureStore;
-        this.thumbnailsStore = thumbnailsStore;
-        if (Files.notExists(pictureStore)) {
-            Files.createDirectories(pictureStore);
+   // private Path UPLOADS;
+    // private Path THUMBNAILS;
+    
+    public static final Path UPLOADS = Paths.get("/Users/denisbolshakov/Documents/JavaEE/Version1601/SempicUserCreation/web/resources/files");
+    public static final Path THUMBNAILS = Paths.get("/Users/denisbolshakov/Documents/JavaEE/Version1601/SempicUserCreation/web/resources/thumbnails");
+    public static final Path UPLOADSWEB = Paths.get("/SempicUserCreation/faces/javax.faces.resource/files");
+    public static final Path THUMBNAILSWEB = Paths.get("/SempicUserCreation/faces/javax.faces.resource/thumbnails");
+    public PictureStore() throws IOException {
+        // this.UPLOADS = UPLOADS;
+        //this.THUMBNAILS = THUMBNAILS;
+        if (Files.notExists(UPLOADS)) {
+            Files.createDirectories(UPLOADS);
         }
-        if (Files.notExists(thumbnailsStore)) {
-            Files.createDirectories(thumbnailsStore);
+        if (Files.notExists(THUMBNAILS)) {
+            Files.createDirectories(THUMBNAILS);
         }
     }
+    
+    
 
     public InputStream getPictureStream(Path picPath) throws IOException {
-        return Files.newInputStream(getAbsolutePath(pictureStore, picPath), StandardOpenOption.READ);
+        return Files.newInputStream(getAbsolutePath(UPLOADS, picPath), StandardOpenOption.READ);
     }
 
     public InputStream getPictureStream(Path picPath, int width) throws IOException {
@@ -42,10 +49,10 @@ public class PictureStore {
             throw new RuntimeException("thumbnail width cannot be negative");
         }
         // Thumbnail path have the form: /path/to/store/width/path/to/picture
-        Path p = getAbsolutePath(thumbnailsStore.resolve(String.valueOf(width)), picPath);
+        Path p = getAbsolutePath(THUMBNAILS.resolve(String.valueOf(width)), picPath);
 
         if (Files.notExists(p)) {
-            BufferedImage bim = ImageIO.read(getAbsolutePath(pictureStore, picPath).toFile());
+            BufferedImage bim = ImageIO.read(getAbsolutePath(UPLOADS, picPath).toFile());
             int height = (int) (bim.getHeight() * (((double) width) / bim.getWidth()));
             Image resizedImg = bim.getScaledInstance(width, height, Image.SCALE_FAST);
             BufferedImage rBimg = new BufferedImage(width, height, bim.getType());
@@ -66,13 +73,13 @@ public class PictureStore {
     
 
     public void storePicture(Path picPath, InputStream data) throws IOException {
-        picPath = getAbsolutePath(pictureStore, picPath);
+        picPath = getAbsolutePath(UPLOADS, picPath);
         Files.createDirectories(picPath.getParent());
         Files.copy(data, picPath, StandardCopyOption.REPLACE_EXISTING);
     }
 
     public void deletePicture(Path picPath) throws IOException {
-        Path originalP = getAbsolutePath(pictureStore, picPath);
+        Path originalP = getAbsolutePath(UPLOADS, picPath);
         try {
             Files.deleteIfExists(originalP);
         }
@@ -84,7 +91,7 @@ public class PictureStore {
         } catch (DirectoryNotEmptyException e) {
         }
 
-        for (Path p : Files.newDirectoryStream(thumbnailsStore)) {
+        for (Path p : Files.newDirectoryStream(THUMBNAILS)) {
             Path tp = getAbsolutePath(p, picPath);
             Files.deleteIfExists(tp);
             try {
@@ -94,13 +101,16 @@ public class PictureStore {
         }
     }
 
-    private static Path getAbsolutePath(Path store, Path path) throws IOException {
-        // Normalize the path and check that we do not go before pictureStore
+    public static Path getAbsolutePath(Path store, Path path) throws IOException {
+        // Normalize the path and check that we do not go before UPLOADS
         // for security reasons
         // i.e. we do not allow /path/to/store + ../../ddsdd
         path = store.resolve(path);
         path = path.normalize();
-        if (!path.startsWith(store)) {
+        if (!path.startsWith(UPLOADS) && !path.startsWith(THUMBNAILS) && !path.startsWith(THUMBNAILSWEB) && !path.startsWith(UPLOADSWEB)){
+            System.out.println("Store " + store);
+            System.out.println("Path " + path);
+
             throw new FileNotFoundException();
         }
         return path;
@@ -108,7 +118,7 @@ public class PictureStore {
 
     // to be redefine in order to suppress also directories
     public void emptyCache() throws IOException {
-        Files.walk(thumbnailsStore).filter(p -> Files.isRegularFile(p)).forEach(p -> {
+        Files.walk(THUMBNAILS).filter(p -> Files.isRegularFile(p)).forEach(p -> {
             try {
                 Files.delete(p);
             } catch (IOException ex) {

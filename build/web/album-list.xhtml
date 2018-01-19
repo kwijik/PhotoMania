@@ -27,16 +27,20 @@
                                required="required" title="Enter album name."/>
              </p>
             <p>
-                        <h:commandButton value="Create Album" 
+                <h:commandButton value="Create Album" 
                                  action="#{albumList.create()}"/>
-                    </p>
+               </p>
         </h:form>
         <h:outputText value="#{authManager.connectedUser.email}"/>
-        
+       
         <ui:repeat value="#{albumList.albumList}" var="album">
-            <li><h:outputText value="#{album.titre}" /></li>
-            <li><h:outputText value="#{album.numberOfPictures}" /></li>
+            <li>
+                <h:link value="#{album.titre}" outcome="pictures" >
+                    <f:param name="album" value="#{album.id}" />
+                </h:link> 
+            </li>
         </ui:repeat>
+        
     </h:body>
 </html>
 

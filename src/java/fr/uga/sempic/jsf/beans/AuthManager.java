@@ -18,10 +18,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 
-/**
- *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
- */
 @Named
 @SessionScoped
 public class AuthManager implements Serializable {

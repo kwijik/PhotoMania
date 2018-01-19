@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.uga.miashs.sempic.util;
+package fr.uga.sempic.jsf.beans;
 
-
-public enum Roles { 
-    ADMIN, USER
+/**
+ *
+ * @author denisbolshakov
+ */
+public class SharedAlbums {
+    
 }
