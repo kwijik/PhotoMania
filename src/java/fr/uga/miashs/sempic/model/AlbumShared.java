@@ -17,7 +17,10 @@ public class AlbumShared {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    Long receiverId;
-    Long albumId;
+    private Long receiverId;
+    
+    private Long albumId;
+    
+    
     
 }
