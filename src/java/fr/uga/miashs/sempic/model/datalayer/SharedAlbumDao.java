@@ -37,8 +37,8 @@ public class SharedAlbumDao  extends AbstractJpaDao <SharedAlbum, SempicUser>{
         try{
             return 
                     getEntityManager().createQuery("Select a FROM SharedAlbum a " + 
-                            "WHERE a.receiverId=:receiverId")
-             .setParameter("receiverId", receiverId)
+                            "WHERE a.receiver_id=:receiverId")
+             .setParameter("receiver_id", receiverId)
                 .getResultList();
         }  catch (NoResultException e) {
             return null;
@@ -49,8 +49,8 @@ public class SharedAlbumDao  extends AbstractJpaDao <SharedAlbum, SempicUser>{
         try{
             return 
                     getEntityManager().createQuery("Select a FROM SharedAlbum a " + 
-                            "WHERE a.albumId=:albumId")
-             .setParameter("albumId", albumId)
+                            "WHERE a.album_id=:albumId")
+             .setParameter("album_id", albumId)
                 .getResultList();
         }  catch (NoResultException e) {
             return null;
