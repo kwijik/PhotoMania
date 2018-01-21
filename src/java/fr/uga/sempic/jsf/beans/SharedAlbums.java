@@ -6,30 +6,40 @@
 package fr.uga.sempic.jsf.beans;
 
 import fr.uga.miashs.sempic.model.Album;
+import fr.uga.miashs.sempic.model.SharedAlbum;
 import fr.uga.miashs.sempic.model.SempicUser;
 import fr.uga.miashs.sempic.model.datalayer.AlbumDao;
+import fr.uga.miashs.sempic.model.datalayer.SempicUserDao;
+import fr.uga.miashs.sempic.model.datalayer.SharedAlbumDao;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.ConstraintViolationException;
 
-
-public class SharedAlbums {
+@Named
+@SessionScoped
+public class SharedAlbums implements Serializable{
     private List<Album> albumList;
     
     @Inject
     AuthManager am;
     @EJB
-    AlbumDao dao;
+    SharedAlbumDao dao;
     SempicUser connectedUser;
-    Album album;
+    SharedAlbum sharedAlbum;
+    Long albumId;
+    String email;
+    @EJB
+    SempicUserDao userDao;
+    @EJB
+    AlbumDao daoAlbum;
     
-    public SharedAlbums(){
-        
-    }
     
     public SempicUser getConnectedUser() {
         if(connectedUser == null){
@@ -38,24 +48,46 @@ public class SharedAlbums {
         return connectedUser;
     }
     
-    public List<Album> getAlbumList() {
-        return dao.getByUser(getConnectedUser());
+    public String getEmail() {
+        return email;
     }
     
-    public void setAlbum(Album a) {
-        this.album = a;
+     public void setEmail(String email) {
+        this.email = email;
     }
     
-    public Album getAlbum() {
-        if (album == null) {
-            album = new Album(am.getConnectedUser());
+    public List<SharedAlbum> getSharedAlbumList() {
+        return dao.getByReceiverId(getConnectedUser().getId());
+    }
+    
+     public void setSharedAlbum(SharedAlbum a) {
+        this.sharedAlbum = a;
+    }
+    
+    public SharedAlbum getSharedAlbum() {
+        // if (sharedAlbum == null) {
+        //    sharedAlbum = new SharedAlbum(getAlbumId(), );
+        //}
+        return sharedAlbum;
+    }
+    
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
+    }
+    
+    public Long getAlbumId() {
+       if (albumId == null){
+            return Long.valueOf(0);
         }
-        return album;
+        return albumId;
     }
     
     public String share() {
         try { 
-            dao.create(album);
+            
+            Long recieverId = userDao.getByEmail(email).getId();
+            System.out.println("Email: " + email + " albumId: " + albumId + " recieverId: " + recieverId);
+            dao.create(new SharedAlbum(daoAlbum.getById(albumId), userDao.getByEmail(email)));
         } catch (EJBException ex) {
             if (ex.getCause() instanceof ConstraintViolationException) {
                 ConstraintViolationException vEx = (ConstraintViolationException) ex.getCause();

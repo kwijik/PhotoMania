@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Pictures</title>
@@ -10,12 +11,27 @@
     <f:metadata>
             <f:viewParam name="album" value="#{pictures.albumId}" required="true" />
             <f:viewParam name="album" value="#{pictureSave.albumId}" required="true" />
+            <f:viewParam name="album" value="#{sharedAlbums.albumId}" required="true" />
     </f:metadata>
     
     <h:body>
-
-         hello from pictures #{pictureSave.albumId}
+        
+        hello from pictures #{pictureSave.albumId}
         <h:outputText value="#{authManager.connectedUser.email}"/>
+        
+        <h:form>
+             <p>
+                <label>Email </label>
+                   <br/>
+                       <h:inputText p:type="text" id="email" 
+                               p:placeholder="name" value="#{sharedAlbums.email}" 
+                                title="Enter album name."/>
+             </p>
+            <p>
+                <h:commandButton value="Share Album" 
+                                 action="#{sharedAlbums.share()}"/>
+            </p>
+        </h:form>
         
         <h:form enctype="multipart/form-data">
             <h:inputFile value="#{pictureSave.file}">
@@ -23,7 +39,7 @@
             </h:inputFile>
         </h:form>
         
-        #{pictures.list}
+        
         <ui:repeat value="#{pictures.list}" var="picture">
             
             <h:graphicImage value="#{picture.thumbnailPath}" />

@@ -41,6 +41,16 @@
             </li>
         </ui:repeat>
         
+        <br/>
+        shared albums
+        <ui:repeat value="#{sharedAlbum.sharedAlbumList}" var="album">
+            <li>
+                <h:link value="#{album.titre}" outcome="pictures" >
+                    <f:param name="album" value="#{album.albumId}" />
+                </h:link> 
+            </li>
+        </ui:repeat>
+        
     </h:body>
 </html>
 

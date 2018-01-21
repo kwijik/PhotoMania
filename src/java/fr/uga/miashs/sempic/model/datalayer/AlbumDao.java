@@ -24,7 +24,7 @@ public class AlbumDao extends AbstractJpaDao<Album,Long> {
         super(Album.class);
     }
     
-    
+    // ALBUM_ID RECEIVER_ID ID
     @Override
     protected EntityManager getEntityManager() {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
