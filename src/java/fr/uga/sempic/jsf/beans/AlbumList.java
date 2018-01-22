@@ -8,9 +8,11 @@ package fr.uga.sempic.jsf.beans;
 import fr.uga.miashs.sempic.model.Album;
 import fr.uga.miashs.sempic.model.Picture;
 import fr.uga.miashs.sempic.model.SempicUser;
+import fr.uga.miashs.sempic.model.SharedAlbum;
 import fr.uga.miashs.sempic.model.datalayer.AlbumDao;
 import fr.uga.miashs.sempic.model.datalayer.PictureDao;
 import fr.uga.miashs.sempic.model.datalayer.PictureStore;
+import fr.uga.miashs.sempic.model.datalayer.SharedAlbumDao;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -42,6 +44,8 @@ public class AlbumList implements Serializable {
     Album album;
     @EJB
     PictureDao pictureDao;
+    @EJB
+    SharedAlbumDao sharedAlbumDao;
     
     public AlbumList(){
        // System.out.println("AM: " + am);
@@ -94,9 +98,14 @@ public class AlbumList implements Serializable {
             pictureDao.delete(p);
             
         }
-        dao.delete(album);
         System.out.println("Deleting..." + album.getId());
+        dao.delete(album);
         
+        List<SharedAlbum> sharedAlbums = sharedAlbumDao.getByAlbum(album);
+        for(SharedAlbum sa:sharedAlbums){
+            sharedAlbumDao.delete(sa);
+        }
+
         return "album-list.xhtml";
     }
 
