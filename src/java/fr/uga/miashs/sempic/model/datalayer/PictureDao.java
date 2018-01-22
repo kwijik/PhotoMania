@@ -13,10 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author denisbolshakov
- */
+
 @Stateless
 public class PictureDao extends AbstractJpaDao<Picture, Long>{
 
@@ -33,11 +30,22 @@ public class PictureDao extends AbstractJpaDao<Picture, Long>{
        return em;
     }
     
+    public List<Picture> getByName(String name){
+        try{
+            return
+                    getEntityManager().createQuery("Select p FROM Picture p " + 
+                            "WHERE p.name=:name").setParameter("name", name)
+                .getResultList();
+        }  catch (NoResultException e) {
+            return null;
+        }
+    }
+    
     public Picture getByName(String name, String album_titre){
         try{
             return (Picture)
-                    getEntityManager().createQuery("Select a FROM Picture p " + 
-                            "WHERE p. ame=:name and a.titre=:album_titre").setParameter("name", name)
+                    getEntityManager().createQuery("Select p FROM Picture p " + 
+                            "WHERE p. name=:name and p.titre=:album_titre").setParameter("name", name)
              .setParameter("titre", album_titre)
                 .getSingleResult();
         }  catch (NoResultException e) {

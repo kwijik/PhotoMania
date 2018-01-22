@@ -40,6 +40,9 @@ public class SharedAlbums implements Serializable{
     @EJB
     AlbumDao daoAlbum;
     
+    public SharedAlbums(){
+        
+    }
     
     public SempicUser getConnectedUser() {
         if(connectedUser == null){
@@ -57,7 +60,8 @@ public class SharedAlbums implements Serializable{
     }
     
     public List<SharedAlbum> getSharedAlbumList() {
-        return dao.getByReceiverId(getConnectedUser().getId());
+        System.out.println("Carrot from get: "+dao.getByReceiver(getConnectedUser()));
+        return dao.getByReceiver(getConnectedUser());
     }
     
      public void setSharedAlbum(SharedAlbum a) {

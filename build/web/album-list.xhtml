@@ -39,15 +39,20 @@
                     <f:param name="album" value="#{album.id}" />
                 </h:link> 
             </li>
+             <h:form id="form">
+                <h:commandButton id="button" value="Delete" action="#{albumList.delete(album)}" />
+             </h:form>
         </ui:repeat>
         
         <br/>
-        shared albums
-        <ui:repeat value="#{sharedAlbum.sharedAlbumList}" var="album">
+        shared albums \
+        <ui:repeat value="#{sharedAlbums.sharedAlbumList}" var="sharedAlbum">
             <li>
-                <h:link value="#{album.titre}" outcome="pictures" >
-                    <f:param name="album" value="#{album.albumId}" />
+                
+                <h:link value="#{sharedAlbum.album.titre}" outcome="pictures" >
+                    <f:param name="album" value="#{sharedAlbum.album.id}" />     
                 </h:link> 
+               
             </li>
         </ui:repeat>
         

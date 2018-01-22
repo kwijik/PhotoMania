@@ -39,7 +39,7 @@ public class PictureStore {
     }
     
     
-
+// 
     public InputStream getPictureStream(Path picPath) throws IOException {
         return Files.newInputStream(getAbsolutePath(UPLOADS, picPath), StandardOpenOption.READ);
     }
