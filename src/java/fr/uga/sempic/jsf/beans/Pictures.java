@@ -17,6 +17,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ *
+ * @author denisbolshakov
+ */
 
 @Named
 @SessionScoped

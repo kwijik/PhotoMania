@@ -14,6 +14,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 
+/**
+ *
+ * @author denisbolshakov
+ */
+
 @Stateless
 public class AlbumDao extends AbstractJpaDao<Album,Long> {
 

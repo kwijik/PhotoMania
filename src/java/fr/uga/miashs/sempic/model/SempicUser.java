@@ -19,6 +19,10 @@ import java.util.logging.Logger;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ *
+ * @author denisbolshakov
+ */
 
 @Table
 @Entity

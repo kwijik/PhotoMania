@@ -13,6 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+/**
+ *
+ * @author denisbolshakov
+ */
+
 @Entity
 public class SharedAlbum implements Serializable{
   
