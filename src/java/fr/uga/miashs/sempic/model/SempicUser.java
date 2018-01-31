@@ -21,7 +21,7 @@ import javax.validation.constraints.*;
 
 /**
  *
- * @author denisbolshakov
+ * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
  */
 
 @Table

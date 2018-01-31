@@ -5,6 +5,10 @@
  */
 package fr.uga.miashs.sempic.util;
 
+/**
+ *
+ * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
+ */
 
 public enum Roles { 
     ADMIN, USER

@@ -17,6 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
+/**
+ *
+ * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
+ */
 
 public class PictureStore {
 
